@@ -16,7 +16,7 @@ class CreateMusicPostsTable extends Migration
         Schema::create('music_posts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title', 100);
-            $table->string('detail', 255);
+            $table->string('detail', 255)->nullable();
             $table->string('image_path', 255)->nullable();
             $table->timestamps();
         });
