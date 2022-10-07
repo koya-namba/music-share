@@ -2,29 +2,24 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <title>Blog</title>
-        <!-- Fonts -->
+        <title>Musci Share</title>
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     </head>
     <body>
-        <h1>Blog Name</h1>
+        <h1>Music Share</h1>
         <div class='create'>
             [<a href='/music_posts/create'>create</a>]
         </div>
         <div class='posts'>
-            @foreach ($music_posts as $mucis_post)
+            @foreach ($music_posts as $music_post)
                 <div class='post'>
                     <h2 class='title'>
-                        <a href="/music_posts/{{ $music_post->id }}">
-                            {{ $music_post->title }}
-                        </a>
+                        {{ $music_post->title }}
                     </h2>
-                    <p class='body'>{{ $music_post->detail }}</p>
+                    <p>{{ $music_post->audio_path }}</p><br />
+                    <audio controls src={{ $music_post->audio_path }} id="audio"></audio><br />
                 </div>
             @endforeach
-        </div>
-        <div class='paginate'>
-            {{ $music_posts->links() }}
         </div>
     </body>
 </html>

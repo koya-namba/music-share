@@ -6,7 +6,7 @@ const sound2 = document.getElementById('sound2');
 const sound3 = document.getElementById('sound3');
 const stopBtn = document.getElementById('stopBtn');
 const resetBtn = document.getElementById('resetBtn');
-const audioFile = document.getElementById('audioFile');
+const downloadLink = document.getElementById('download');
 const audio = document.getElementById('audio');
 
 const audioData = [];
@@ -96,9 +96,8 @@ const exportWAV = function (audioData) {
 const saveAudio = function () {
     const href = exportWAV(audioData);
     audio.src=href;
-    audioFile.file=href;
-    // downloadLink.href = href;
-    // downloadLink.download = 'test.wav';
+    downloadLink.href = href;
+    downloadLink.download = 'test.wav';
     // downloadLink.click();
     audioCtx.close();
 }
@@ -202,7 +201,6 @@ resetBtn.addEventListener('click', () => {
     audioData.length = 0;
     audio.src=null;
     audio.removeAttribute('src');
-    audioFile.removeAttribute('src');
-    // downloadLink.removeAttribute('href')
-    // downloadLink.removeAttribute('download')
+    downloadLink.removeAttribute('href')
+    downloadLink.removeAttribute('download')
 })

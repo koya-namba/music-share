@@ -102,7 +102,7 @@ var sound2 = document.getElementById('sound2');
 var sound3 = document.getElementById('sound3');
 var stopBtn = document.getElementById('stopBtn');
 var resetBtn = document.getElementById('resetBtn');
-var audioFile = document.getElementById('audioFile');
+var downloadLink = document.getElementById('download');
 var audio = document.getElementById('audio');
 var audioData = [];
 var bufferSize = 1024;
@@ -212,9 +212,8 @@ var exportWAV = function exportWAV(audioData) {
 var saveAudio = function saveAudio() {
   var href = exportWAV(audioData);
   audio.src = href;
-  audioFile.file = href; // downloadLink.href = href;
-  // downloadLink.download = 'test.wav';
-  // downloadLink.click();
+  downloadLink.href = href;
+  downloadLink.download = 'test.wav'; // downloadLink.click();
 
   audioCtx.close();
 };
@@ -319,8 +318,8 @@ resetBtn.addEventListener('click', function () {
   audioData.length = 0;
   audio.src = null;
   audio.removeAttribute('src');
-  audioFile.removeAttribute('src'); // downloadLink.removeAttribute('href')
-  // downloadLink.removeAttribute('download')
+  downloadLink.removeAttribute('href');
+  downloadLink.removeAttribute('download');
 });
 
 /***/ }),

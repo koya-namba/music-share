@@ -2,33 +2,31 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <title>Blog</title>
+        <title>Create Music</title>
     </head>
     <body>
-        <h1>Blog Name</h1>
+        <h1>Create Music</h1>
         <button id="startBtn">Start</button>
         <button id="sound1">音1</button>
         <button id="sound2">音2</button>
         <button id="sound3">音3</button>
         <button id="stopBtn">Stop</button>
         <br />
-        <audio controls id="audio"></audio>
+        <audio controls id="audio"></audio><br />
+        <a id="download">Download</a>
         <button id="resetBtn">Reset</button>
         
-        <form action="/music_posts" method="POST">
+        <h2>以下で音楽をDBに登録</h2>
+        <form action="/music_posts" method="POST"  enctype="multipart/form-data">
             @csrf
             <div class="title">
-                <h2>Title</h2>
-                <input type="text" name="music_post[title]" placeholder="タイトル"/>
+                <h3>Title</h3>
+                <input type="text" name="title" placeholder="タイトル"/>
             </div>
             <div class="audio">
-                <h2>音声ファイル</h2>
-                <input id='audioFile' type="file" name="music_post[audio]" />
+                <h3>音声ファイル</h3>
+                <input id='audioFile' type="file" name="audio" />
             </div>
-            <!--<div class="body">-->
-            <!--    <h2>Body</h2>-->
-            <!--    <textarea name="post[body]" placeholder="今日も1日お疲れさまでした。"></textarea>-->
-            <!--</div>-->
             <input type="submit" value="保存"/>
         </form>
         <div class="back">[<a href="/">back</a>]</div>
