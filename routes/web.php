@@ -18,3 +18,6 @@
 Route::get('/', 'MusicPostController@index');
 Route::get('/music_posts/create', 'MusicPostController@create');
 Route::post('/music_posts', 'MusicPostController@store');
+Route::get('/music_posts/{music_post}', 'MusicPostController@show');
+Route::get('/music_posts/{music_post}/edit', 'MusicPostController@edit');
+Route::put('/music_posts/{music_post}', 'MusicPostController@update');

@@ -5,7 +5,7 @@
         <title>Create Music</title>
     </head>
     <body>
-        <h1>Create Music</h1>
+        <h1>作成ページ</h1>
         <button id="startBtn">Start</button>
         <button id="sound1">音1</button>
         <button id="sound2">音2</button>
@@ -29,7 +29,7 @@
             </div>
             <input type="submit" value="保存"/>
         </form>
-        <div class="back">[<a href="/">back</a>]</div>
+        <div class="back">[<a href="/">一覧に戻る</a>]</div>
         <script src="{{ mix('js/music.js') }}"></script>
     </body>
 </html>

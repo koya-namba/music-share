@@ -34,4 +34,23 @@ class MusicPostController extends Controller
         
         return redirect('/');
     }
+    
+    public function show(MusicPost $music_post)
+    {
+        return view('posts/show')->with(['music_post' => $music_post]);
+    }
+    
+    public function edit(MusicPost $music_post)
+    {
+        return view('posts/edit')->with(['music_post' => $music_post]);
+    }
+    
+    public function update(MusicPost $music_post, Request $request)
+    {
+        $music_post->title = $request['title'];
+        $music_post->memo = $request['memo'];
+        $music_post->save();
+        
+        return redirect('/music_posts/' . $music_post->id);
+    }
 }
