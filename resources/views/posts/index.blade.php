@@ -6,7 +6,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     </head>
     <body>
-        <h1>Music Share</h1>
+        <h1>一覧ページ</h1>
         <div class='create'>
             [<a href='/music_posts/create'>create</a>]
         </div>
@@ -14,9 +14,12 @@
             @foreach ($music_posts as $music_post)
                 <div class='post'>
                     <h2 class='title'>
-                        {{ $music_post->title }}
+                        タイトル：
+                        <a href="/music_posts/{{ $music_post->id }}">
+                            {{ $music_post->title }}
+                        </a>
                     </h2>
-                    <p>{{ $music_post->audio_path }}</p><br />
+                    <p>パス：{{ $music_post->audio_path }}</p><br />
                     <audio controls src={{ $music_post->audio_path }} id="audio"></audio><br />
                 </div>
             @endforeach
