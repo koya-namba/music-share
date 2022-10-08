@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Create Music</title>
+        <link type="text/css" rel="stylesheet" href="{{ secure_asset('css/sample.css') }}">
     </head>
     <body>
         <h1>作成ページ</h1>
