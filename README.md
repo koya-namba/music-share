@@ -1,78 +1,156 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# laravel6 × S3 × Web Audio API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+フレームワークにlaravel6を用いて，音声ファイルの保存をS3，簡単な音作成にWea Audio APIを用いる．
 
-## About Laravel
+## 目次
+1. AWSのS3の設定．
+2. laravelを書く．
+3. JS/cssを書く．
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 参考
+S3の設定の参考．
+- [S3の設定・アップロード方法](https://notepm.jp/sharing/b51bf504-3032-407b-b520-0c73e0c25f70)
+- [Rails, Laravel(画像アップロード)向けAWS(IAM:ユーザ, S3:バケット)の設定](https://qiita.com/nobu0717/items/4425c02157bc5e88d7b6)
+- [LaravelでAWS S3へ画像をアップロードする](https://qiita.com/nobu0717/items/51dfcecda90d3c5958b8)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+JS/cssに関する参考．
+- [Laravel で JavaScriptをやるときの手法](https://qiita.com/ntm718/items/fed0e1060557a4e28ef3)
+- [Laravel日記2 - CSSを適用してみる-](https://qiita.com/kotsuban-teikin/items/9b00d0faa0b7eaf70796)
+- [Laravelのアセットに関するTips](https://qiita.com/sakuraya/items/411dbc2e1e633928340e)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## コードを確認する場所．
+この後色々説明するが全部のコードを載せないので，詳しくは以下を確認．
+- app/Http/Controllers/MusicPostController.php
+- database/migrations/2022_10_06_013454_create_music_posts_table.php
+- resources/views/posts/index.blade.php
+- resources/views/posts/create.blade.php
+- resources/views/posts/show.blade.php
+- resources/views/posts/edit.blade.php
+- routes/web.php
+- resources/js/music.js
+- webpack.mix.js
+- public/css/sample.css
 
-## Learning Laravel
+## 説明
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### AWSのS3の設定
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+S3の設定は[S3の設定・アップロード方法](https://notepm.jp/sharing/b51bf504-3032-407b-b520-0c73e0c25f70)
+を参考にしてください！  
+実査に試して，S3にファイルが保存されていることを確認してください！
 
-## Laravel Sponsors
+### laravel6
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+#### DBを確認．
+music_posts_tableを確認すると，今回マストで必要なのは，
+- title
+- audio_path
+です．audio_pathにはS3に保存したファイルを表示するpathを保存します．
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+#### 保存処理
+create.blade.phpを確認します．ポイントは
+```php
+<form action="/music_posts" method="POST"  enctype="multipart/form-data">
+```
+のようにformタグにenctype="multipart/form-data"を追加することと，
+```php
+<input id='audioFile' type="file" name="audio" />
+```
+ファイルを保存するために，inputタグのtypeを'file'にすることです．
 
-## Contributing
+次にMusicPostControllerを見ます．
+```php
+use Storage;
+```
+を追記します．
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+そして，storeメソッドを見ます．
+$music_postにはtitleとaudio_pathがマストなのでこの2つを必ず入れてDBに保存します．  
+まずはtitleだけ取り出して，$music_postに代入しましょう！
+```php
+$music_post->title = $request['title'];
+```
+次にファイルを保存していきますが，ファイル自体はS3に保存し，そのパスをaduio_pathに代入しましょう！
+```php
+//s3アップロード開始
+$audio = $request->file('audio');
+// バケットの`myprefix`フォルダへアップロード
+$path = Storage::disk('s3')->putFile('myprefix', $audio, 'public');
+// アップロードしたaudioのフルパスを取得
+$music_post->audio_path = Storage::disk('s3')->url($path);
+```
+最後に$music_postにはtitleとaudio_pathが代入されているため，DBに登録しましょう！
+```php
+$music_post->save();
+```
 
-## Code of Conduct
+#### ファイルを表示する．
+先ほどまででDBへの保存はできたので，後は表示をしましょう！  
+MusicPostControllerのindexメソッド少し覗きます．
+```php
+return view('posts/index')->with(['music_posts' => $music_post->get()]);
+```
+となっているので，これはカリキュラム通りです．．．
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+さて，index.blade.phpを見ます．  
+ポイントはaudioタグのsrcに$music_postのaudio_pathを渡しているところです．
+```php
+<audio controls src={{ $music_post->audio_path }} id="audio"></audio>
+```
+ファイルを表示するためにはDBに保存されているpathをsrcに代入するだけでOKです！
 
-## Security Vulnerabilities
+簡単にはなりますが，以上でファイルをS3に保存して，blade.phpに表示する方法を説明になります．
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### JS/css
+JSやcssの書き方やhtmlへ読み込み方を説明します！
 
-## License
+#### 事前準備
+以下のコマンドを実行しましょう！
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+npm install
+npm run dev
+```
+
+#### JS
+JSを記入する場所は，resources/jsフォルダの中身です！
+ここに適当にファイル(resources/js/hoge.js)を作成して，JSを書いていきましょう！
+
+JSファイルを記入したら，webback.mix.jsに追記をします．
+```js
+mix.js('resources/js/app.js', 'public/js')
+    .js('resources/js/hoge.js', 'public/js')  // 追加
+    .sass('resources/sass/app.scss', 'public/css');
+```
+これで準備OKです！
+
+JSファイルを変更した際には，必ず
+```bash
+npm run dev
+```
+を実行しましょう！
+
+最後にcreate.blade.phpを見ます．JSを追加するには<body>タグの一番最後に，
+```php
+<script src="{{ mix('js/music.js') }}"></script>
+```
+を追記しましょう！これでJSファイルを実行できます！
+
+#### css
+```bash
+npm install
+npm run dev
+```
+を実行すると，public/cssフォルダが追加されているはずです！
+この中にpublic/css/fuga.cssを作成して，cssファイルを書いていきましょう！
+
+そして，create.blade.phpを確認します！
+```php
+<link type="text/css" rel="stylesheet" href="{{ secure_asset('css/fuga.css') }}">
+```
+を<head>タグの中に追記することでcssを適用できます！
+
+簡単になりますが，これでJS/cssについての説明を終わります．
+
+## まとめ
+すごい簡単な説明ですが，S3, JS, cssについてでした．．．
