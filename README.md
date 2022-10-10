@@ -155,3 +155,36 @@ npm run dev
 
 ## まとめ
 すごい簡単な説明ですが，S3, JS, cssについてでした．．．
+
+## メモ:インストール
+
+初期設定
+```bash
+git clone git@github.com:koya-namba/music-share.git
+cd music_share
+composer install
+npm install
+npm run dev
+cp .env.example .env
+php artisan key:generate
+```
+
+.envを設定
+```vim
+DB_DATABASE={db_name}
+DB_USERNAME={db_username}
+DB_PASSWORD={db_password}
+
+AWS_ACCESS_KEY_ID={access_key_id}
+AWS_SECRET_ACCESS_KEY={secret_access_key}
+AWS_DEFAULT_REGION=ap-northeast-1
+AWS_BUCKET={backet_name}
+```
+
+実行する
+```bash
+php artisan migrate:fresh --seed
+php artisan serve --port=8080
+```
+
+以上！
