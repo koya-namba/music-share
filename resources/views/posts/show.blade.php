@@ -11,6 +11,7 @@
             <h2 class='title'>タイトル：{{ $music_post->title }}</h2>
             <p>メモ：{{ $music_post->memo }}</p>
             <p>バス：{{ $music_post->audio_path }}</p><br />
+            <!--srcにaudio_pathを渡すとファイルを渡せる-->
             <audio controls src={{ $music_post->audio_path }} id="audio"></audio><br />
         </div>
         <div class='back'>
