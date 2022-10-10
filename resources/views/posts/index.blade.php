@@ -20,6 +20,7 @@
                         </a>
                     </h2>
                     <p>パス：{{ $music_post->audio_path }}</p><br />
+                    <!--srcにaudio_pathを渡すとファイルを渡せる-->
                     <audio controls src={{ $music_post->audio_path }} id="audio"></audio><br />
                 </div>
             @endforeach

@@ -11,10 +11,6 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/', 'MusicPostController@index');
 Route::get('/music_posts/create', 'MusicPostController@create');
 Route::post('/music_posts', 'MusicPostController@store');
